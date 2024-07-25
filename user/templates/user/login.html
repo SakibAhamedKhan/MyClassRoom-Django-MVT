@@ -1,0 +1,104 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  Login | MyClassRoom
+{% endblock %}
+
+{% block style %}
+  <style>
+    input {
+      padding: 6px 8px;
+      outline: none;
+      border: 2px solid green;
+      border-radius: 5px;
+      display: block;
+      font-size: 16px;
+      width: 250px;
+      margin-top: 5px;
+    }
+    select {
+      padding: 6px 8px;
+      outline: none;
+      border: 2px solid green;
+      border-radius: 5px;
+      display: block;
+      font-size: 16px;
+      width: 270px;
+      margin-top: 5px;
+    }
+    .form-control {
+      margin: 10px 0px;
+    }
+    .btn-register {
+      width: 270px;
+      padding: 6px 8px !important;
+      outline: none;
+      border: 2px solid green !important;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .reg-div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px;
+      padding-top: 20px;
+    }
+    .reg-form {
+      display: flex;
+      border: 2px solid green;
+      padding: 10px 20px;
+      border-radius: 5px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .reg-error{
+        color: red;
+        font-weight: bold;
+        background-color: #e1f90082;
+        padding: 2px 4px;
+        margin-bottom: 5px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="reg-div">
+    <h1 style="margin-bottom: 10px;">Login!</h1>
+    <form action="" method="post" class="reg-form">
+      {% csrf_token %}   
+      <div>
+        {% comment %}username{% endcomment %}
+        <div class="form-control">
+          <!-- Field related errors -->
+          {% if form.username.errors %}
+            {% for error in form.username.errors %}
+              <p class="reg-error">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+          <label for="">UserName</label>
+          {{ form.username }}
+        </div>
+        {% comment %}password{% endcomment %}
+        <div class="form-control">
+          <!-- Field related errors -->
+          {% if form.password.errors %}
+            {% for error in form.password.errors %}
+              <p class="reg-error">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+          <label for="">Password</label>
+          {{ form.password }}
+        </div>   
+        <p>
+          Don't have account? <a href="{% url 'register' %}" style="font-weight: bold;">Registration Now</a>
+        </p>
+        <button class="btn btn-register" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  {{ data.classroom_name }} | ClassRoom
+{% endblock %}
+
+{% block style %}
+  <style>
+    .room-div {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 95%;
+      margin: 0 auto;
+      padding: 20px;
+      gap: 10px;
+    }
+    .room-div-1 {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+    .room-div-2 {
+      width: 100%;
+    }
+    .room-div-2-inner {
+      border: 2px solid green;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="room-div">
+    <div class="room-div-1">
+      <div style="position: fixed; display: flex;flex-direction:column;">
+        <div  style="width: 220px; margin: 20px 0;">
+          <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">{{ data.classroom_name }}</h2>
+          <p style="font-size: 13px;">{{ data.subject }}</p>
+          <p style="font-size: 13px;">Invitation Code: {{ data.invitation_code }}</p>
+        </div>
+        <a href="{% url 'classRoomPage/addpost' data.id %}" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Add Post</a>
+        <a href="{% url 'classRoomPage/updateclassroom' data.id %}" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Edit ClassRoom</a>
+        <a href="{% url 'classroompage/managestudent/' data.id %}" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Manage Student</a>
+        <a href="" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Delete ClassRoom</a>
+      </div>
+    </div>
+    <div class="room-div-2">
+      {% if not post_data %}
+        <p style="text-align: center; font-size: 25px; margin-top: 50px;">No classroom Post Added</p>
+      {% endif %}
+      {% for post in post_data %}
+        <div class="room-div-2-inner">
+          <h2 style="margin-bottom: 5px;">{{ post.title }}</h2>
+          <p style="margin-bottom: 10px;">{{ post.description }}</p>
+          <p style="text-align:end;">{{ post.posted_date|timesince }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

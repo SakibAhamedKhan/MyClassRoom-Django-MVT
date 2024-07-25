@@ -1,0 +1,122 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  Password Change | MyClassRoom
+{% endblock %}
+
+{% block style %}
+  <style>
+    input {
+      padding: 6px 8px;
+      outline: none;
+      border: 2px solid green;
+      border-radius: 5px;
+      display: block;
+      font-size: 16px;
+      width: 250px;
+      margin-top: 5px;
+    }
+    select {
+      padding: 6px 8px;
+      outline: none;
+      border: 2px solid green;
+      border-radius: 5px;
+      display: block;
+      font-size: 16px;
+      width: 270px;
+      margin-top: 5px;
+    }
+    .form-control {
+      margin: 10px 0px;
+    }
+    .btn-register {
+      width: 270px;
+      padding: 6px 8px !important;
+      outline: none;
+      border: 2px solid green !important;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .reg-div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px;
+      padding-top: 20px;
+    }
+    .reg-form {
+      display: flex;
+      border: 2px solid green;
+      padding: 10px 20px;
+      border-radius: 5px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .reg-error{
+        color: red;
+        font-weight: bold;
+        background-color: #e1f90082;
+        padding: 2px 4px;
+        margin-bottom: 5px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="reg-div">
+    <h1 style="margin-bottom: 10px;">Change Your Password!</h1>
+    <form action="" method="post" class="reg-form">
+      {% csrf_token %}
+      {% if form.error_dict %}
+        <p class="error">Please correct the errors below.</p>
+      {% endif %}
+
+      <!-- Hidden Field (If we write someting wrong formate in input) -->
+      {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+      {% endfor %}
+
+      <div>
+        {% comment %}old_password{% endcomment %}
+        <div class="form-control">
+          <!-- Field related errors -->
+          {% if form.old_password.errors %}
+            {% for error in form.old_password.errors %}
+              <p class="reg-error">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+          <label for="">{{form.old_password.label}}</label>
+          {{ form.old_password }}
+        </div>
+        {% comment %}new_password1{% endcomment %}
+        <div class="form-control">
+          <!-- Field related errors -->
+          {% if form.new_password1.errors %}
+            {% for error in form.new_password1.errors %}
+              <p class="reg-error">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+          <label for="">{{form.new_password1.label}}</label>
+          {{ form.new_password1 }}
+        </div>
+        {% comment %}new_password2{% endcomment %}
+        <div class="form-control">
+          <!-- Field related errors -->
+          {% if form.new_password2.errors %}
+            {% for error in form.new_password2.errors %}
+              <p class="reg-error">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+          <label for="">{{form.new_password2.label}}</label>
+          {{ form.new_password2 }}
+        </div>
+        <button class="btn btn-register" type="submit">Change</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

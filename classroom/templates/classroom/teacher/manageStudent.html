@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  Student Mangement | {{room_data.classroom_name}} | MyClassRoom
+{% endblock %}
+
+{% block style %}
+<style>
+    .list {
+        list-style: none;
+        text-decoration: none;
+        color: black;
+      }
+      .btn {
+        border: 2px solid black;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div style="display: flex; justify-content: space-between; padding-top: 5px; align-items: center;">
+        <h3>{{room_data.classroom_name}} Student Management</h3>
+        <div style="padding: 20px 0 10px 0;">
+            <a href="{% url 'classRoomPage' room_data.id %}" class="list btn" style="margin-left: 0px!important;">Back</a>
+        </div>
+    </div>
+    <div>
+        <table border="1" style="width: 100%;">
+            <tr>
+                <th>Roll No</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+           
+            {% for data in classroom_joined %}
+                <tr>
+                    <td>{{data.user.info.roll_no}}</td>        
+                    <td>{{data.user.first_name}}</td>        
+                    <td>{{data.user.last_name}}</td>        
+                    <td>{{data.user.email}}</td>        
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock body %}

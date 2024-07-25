@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+  {{room_data.classroom_name}} | MyClassRoom
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Add Post</button>
+    </form>
+{% endblock body %}

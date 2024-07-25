@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .message {
+        width: 100%;
+        background-color: #c3f5f5;
+        padding: 10px 30px;
+        color: darkred;
+      }
+      .bodyStyle {
+        margin: 0 20px;
+      }
+    </style>
+    {% block style %}
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'core/navbar.html' %}
+
+    <div style="margin-top:50px ;">
+      {% if messages %}
+        {% for m in messages %}
+          <div class="message">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="bodyStyle">
+        {% block body %}
+
+        {% endblock %}
+      </div>
+
+      {% block footer %}
+
+      {% endblock %}
+    </div>
+  </body>
+</html>

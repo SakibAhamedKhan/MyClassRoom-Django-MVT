@@ -1,0 +1,60 @@
+<style>
+  .navbar {
+    position:fixed;
+    height: 50px;
+    width: 100%;
+    background-color: springgreen;
+    margin-bottom: 100px;
+    margin-top:-50px;
+  }
+  .divider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+  }
+  .listDivider {
+    display: flex;
+  }
+  .list {
+    list-style: none;
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+  }
+  .btn {
+    border: 2px solid black;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .btn:hover {
+    background-color: aqua !important;
+  }
+</style>
+<nav class="navbar">
+  <div class="divider">
+    <a href="{% url 'index' %}" style="font-size: 24px; font-weight: bold; color: black; text-decoration: none;">MyClassRoom</a>
+    <div class="listDivider">
+      
+     
+      {% if user.is_authenticated %}
+        {% if not user.info.iSTeacher %}
+          <a href="" class="list btn">Join ClassRoom</a>
+        {% else %}
+          <a href="{% url 'createClassRoom' %}" class="list btn">Create ClassRoom</a>
+        {% endif %}
+        <a href="{% url 'profile' %}" class="list btn">Profile</a>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+          <button class="list btn" style="background-color:transparent; padding: 6px 8px;" type="submit">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="list btn">Login</a>
+        <a href="{% url 'register' %}" class="list btn">Register</a>
+      {% endif %}
+
+    </div>
+  </div>
+</nav>
