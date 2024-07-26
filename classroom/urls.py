@@ -6,5 +6,6 @@ urlpatterns = [
     path('classroompage/addpost/<int:classRoomId>', views.classRoomAddPost,name='classRoomPage/addpost' ),
     path('classroompage/updateclassroom/<int:classRoomId>', views.updateClassRoom,name='classRoomPage/updateclassroom' ),
     path('classroompage/managestudent/<int:classRoomId>', views.manageClassRoomStudent,name='classroompage/managestudent/' ),
+    path('classroompage/managestudent/remove/<int:id>/<int:classRoomId>', views.removeStudentFromRoom,name='classroompage/managestudent/remove' ),
     
 ]

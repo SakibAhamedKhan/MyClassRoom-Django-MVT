@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from classroom.models import ClassRoom
+from classroom.models import ClassRoom, ClassRoomJoined
 # Create your views here.
 
 def index(request):

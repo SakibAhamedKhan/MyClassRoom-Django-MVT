@@ -17,7 +17,7 @@ class ClassRoomJoined(models.Model):
     joined_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.classroom.classroom_name
+        return f"{self.classroom.classroom_name} | {self.user.username} | {self.user.first_name}, {self.user.last_name}" 
 
 class ClassRoomPost(models.Model):
     user = models.ForeignKey(User, related_name='classRP', on_delete=models.CASCADE)

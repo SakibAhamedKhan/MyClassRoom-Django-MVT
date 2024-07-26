@@ -104,3 +104,18 @@ def manageClassRoomStudent(request, classRoomId):
 
     return render(request, 'classroom/teacher/manageStudent.html', {'room_data':specific_room, 'classroom_joined':classroom_joined})
     
+
+def removeStudentFromRoom(request, id, classRoomId):
+    if request.user.info.account_type =='student':
+        messages.success(request, 'You are not allowed to add post on classroom!')
+        return redirect('index')
+    
+    specific_room = ClassRoom.objects.get(id=classRoomId)
+    if specific_room.user!=request.user:
+        return redirect('classRoomPage',classRoomId)
+        messages.success(request, 'You are not allowed to post in this classroom')
+    student = ClassRoomJoined.objects.get(id = id)
+    messages.success(request, f"{student.user.first_name} {student.user.last_name} removed successfully")
+    student.delete()
+    return redirect('classroompage/managestudent/',classRoomId)
+    

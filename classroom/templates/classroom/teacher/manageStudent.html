@@ -17,6 +17,9 @@
         cursor: pointer;
         border-radius: 5px;
       }
+      .left-space{
+        padding: 10px;
+      }
 </style>
 {% endblock %}
 
@@ -34,15 +37,17 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Action</th>
             </tr>
            
             {% for data in classroom_joined %}
-                <tr>
-                    <td>{{data.user.info.roll_no}}</td>        
-                    <td>{{data.user.first_name}}</td>        
-                    <td>{{data.user.last_name}}</td>        
-                    <td>{{data.user.email}}</td>        
-                </tr>
+                <tr style="height: 45px;">
+                    <td class="left-space">{{data.user.info.roll_no}}</td>        
+                    <td class="left-space">{{data.user.first_name}}</td>        
+                    <td class="left-space">{{data.user.last_name}}</td>        
+                    <td class="left-space">{{data.user.email}}</td>
+                    <td style="text-align:center;"><a href="{% url 'classroompage/managestudent/remove' data.id room_data.id %}" class="btn" style="list-style: none; text-decoration: none; color: black;">Remove</a></td>     
+                </tr> 
             {% endfor %}
         </table>
     </div>
