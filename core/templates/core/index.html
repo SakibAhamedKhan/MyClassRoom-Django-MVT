@@ -41,22 +41,44 @@
 {% block body %}
   <div class="index-main">
     {% if user.is_authenticated %}
-      <p style="text-align: center; margin: 20px 0; font-size: 20px;">All your classroom</p>
-      {% if not data %}
-        <p style="text-align: center; font-size: 25px; margin-top: 50px;">No classroom created</p>
-      {% endif %}
-      <div class="index-div">
-        {% for d in data %}
-          <div class="index-div-inner">
-            <h3 style="margin-bottom: 10px;">{{ d.classroom_name }}</h3>
-            <p>Subject: {{ d.subject }}</p>
-            <p>Invitation Code: {{ d.invitation_code }}</p>
-            <div style="margin-top: 15px;">
-              <a style="margin-left: 0px!important;" class="list btn" href="{% url 'classRoomPage' d.id %}">Open</a>
+      {% if not user.info.iSTeacher %}
+        <p style="text-align: center; margin: 20px 0; font-size: 20px;">All your joined classroom</p>
+        <div class="index-div">
+          {% for d in data %}
+            <div class="index-div-inner">
+              <h3 style="margin-bottom: 10px;">{{ d.classroom.classroom_name }}</h3>
+              <p>Subject: {{ d.classroom.subject }}</p>
+              <p>Invitation Code: {{ d.classroom.invitation_code }}</p>
+              <div style="margin-top: 15px;">
+                <a style="margin-left: 0px!important;" class="list btn" href="{% url 'classRoomPage' d.id %}">Open</a>
+              </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>
+            
+          {% endfor %}
+        </div>
+        {% if not data %}
+          <p style="text-align: center; font-size: 25px; margin-top: 50px;">No classroom joined</p>
+        {% endif %}
+      {% else %}
+        <p style="text-align: center; margin: 20px 0; font-size: 20px;">All your classroom</p>
+        <div class="index-div">
+          {% for d in data %}
+            <div class="index-div-inner">
+              <h3 style="margin-bottom: 10px;">{{ d.classroom_name }}</h3>
+              <p>Subject: {{ d.subject }}</p>
+              <p>Invitation Code: {{ d.invitation_code }}</p>
+              <div style="margin-top: 15px;">
+                <a style="margin-left: 0px!important;" class="list btn" href="{% url 'classRoomPage' d.id %}">Open</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% if not data %}
+          <p style="text-align: center; font-size: 25px; margin-top: 50px;">No classroom created</p>
+        {% endif %}
+      {% endif %}
+
+      
     {% else %}
       <p>Please login to see this.</p>
     {% endif %}

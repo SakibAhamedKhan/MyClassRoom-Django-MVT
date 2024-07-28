@@ -41,7 +41,7 @@
      
       {% if user.is_authenticated %}
         {% if not user.info.iSTeacher %}
-          <a href="" class="list btn">Join ClassRoom</a>
+          <a href="{% url 'classJoin' %}" class="list btn">Join ClassRoom</a>
         {% else %}
           <a href="{% url 'createClassRoom' %}" class="list btn">Create ClassRoom</a>
         {% endif %}

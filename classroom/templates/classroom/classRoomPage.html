@@ -39,6 +39,7 @@
           <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">{{ data.classroom_name }}</h2>
           <p style="font-size: 13px;">{{ data.subject }}</p>
           <p style="font-size: 13px;">Invitation Code: {{ data.invitation_code }}</p>
+          <p style="font-size: 13px;">Joined: {{ room_ioined|length }}</p>
         </div>
         <a href="{% url 'classRoomPage/addpost' data.id %}" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Add Post</a>
         <a href="{% url 'classRoomPage/updateclassroom' data.id %}" class="list btn" style="margin-left:0; margin-bottom: 10px; text-align: center; font-weight: bold;">Edit ClassRoom</a>
@@ -54,7 +55,7 @@
         <div class="room-div-2-inner">
           <h2 style="margin-bottom: 5px;">{{ post.title }}</h2>
           <p style="margin-bottom: 10px;">{{ post.description }}</p>
-          <p style="text-align:end;">{{ post.posted_date|timesince }}</p>
+          <p style="text-align:end; color: gray;">{{ post.posted_date|timesince }}</p>
         </div>
       {% endfor %}
     </div>

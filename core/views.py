@@ -7,7 +7,9 @@ def index(request):
         return render(request, 'core/index.html')
 
     if request.user.info.account_type =='student':
-        pass
+        data = ClassRoomJoined.objects.filter(user = request.user)
+        print(data)
+        return render(request, 'core/index.html', {'data':data})
 
     if request.user.info.account_type =='teacher':
         data = ClassRoom.objects.filter(user = request.user)

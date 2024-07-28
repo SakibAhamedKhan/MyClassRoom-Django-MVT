@@ -37,7 +37,6 @@ def updateClassRoom(request, classRoomId):
         return redirect('classRoomPage',classRoomId)
     
     form = ClassRoomForm(instance=specific_room)
-
     if request.method == 'POST':
         form = ClassRoomForm(request.POST, instance=specific_room)
         if form.is_valid():
@@ -54,8 +53,9 @@ def classRoomPage(request, id):
         messages.success(request, 'You are not allowed to enter this classroom')
         return redirect('index')
     
-    specific_room_post = ClassRoomPost.objects.filter(classroom=specific_room)
-    return render(request, 'classroom/classRoomPage.html',{'data':specific_room, 'post_data':specific_room_post})
+    room_joined = ClassRoomJoined.objects.filter(classroom=specific_room)
+    specific_room_post = ClassRoomPost.objects.filter(classroom=specific_room).order_by('-posted_date')
+    return render(request, 'classroom/classRoomPage.html',{'data':specific_room, 'post_data':specific_room_post, 'room_ioined':room_joined})
 
 
 
@@ -100,7 +100,7 @@ def manageClassRoomStudent(request, classRoomId):
         messages.success(request, 'You are not allowed to post in this classroom')
         return redirect('classRoomPage',classRoomId)
     
-    classroom_joined = ClassRoomJoined.objects.filter(classroom=specific_room)
+    classroom_joined = ClassRoomJoined.objects.filter(classroom=specific_room).order_by('-joined_date')
 
     return render(request, 'classroom/teacher/manageStudent.html', {'room_data':specific_room, 'classroom_joined':classroom_joined})
     
@@ -118,4 +118,30 @@ def removeStudentFromRoom(request, id, classRoomId):
     messages.success(request, f"{student.user.first_name} {student.user.last_name} removed successfully")
     student.delete()
     return redirect('classroompage/managestudent/',classRoomId)
+
+
+def classJoin(request):
+    if request.user.info.account_type =='teacher':
+        messages.success(request, 'You are not allowed to joined on other teacher classroom!')
+        return redirect('index')
     
+    if request.method=='POST':
+        code = request.POST.get('code')
+        try:
+            find = ClassRoom.objects.get(invitation_code=code)
+        except ClassRoom.DoesNotExist:
+            find = None
+    
+        if find is None:
+            messages.success(request, f"{code} is Wrong Invitation Code!")
+            return redirect('classJoin')
+        
+        ClassRoomJoined.objects.create(
+            user = request.user, 
+            classroom = find,            
+        )
+        messages.success(request, f"You Joined ({find.classroom_name}) successfully!")
+        return redirect('index')
+
+
+    return render(request, 'classroom/student/classRoomJoin.html')
